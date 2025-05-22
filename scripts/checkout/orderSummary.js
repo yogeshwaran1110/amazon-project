@@ -31,6 +31,7 @@ export function renderOrderSummary(){
     cartSummaryHTML += `
 
         <div class="cart-item-container 
+            js-cart-item-container
             js-cart-item-container-${matchingproduct.id}">
             <div class="delivery-date">
                 Delivery date: ${dateString}
@@ -47,7 +48,8 @@ export function renderOrderSummary(){
                 <div class="product-price">
                     ${formatCurrency(matchingproduct.priceCents)}
                 </div>
-                <div class="product-quantity">
+                <div class="product-quantity 
+                js-product-quantity-${matchingproduct.id}">
                     <span>
                     Quantity: <span class="quantity-label js-quantity-label=${matchingproduct.id}">${cartItem.quantity}</span>
                     </span>
@@ -58,7 +60,8 @@ export function renderOrderSummary(){
                     <input class="quantity-input js-quantity-input-${matchingproduct.id}">
                     <span class="save-quantity-link link-primary js-save-link"
                         data-product-id="${matchingproduct.id}">Save</span>
-                    <span class="delete-quantity-link link-primary js-delete-link"  data-product-id="${matchingproduct.id}">
+                    <span class="delete-quantity-link link-primary js-delete-link
+                    js-delete-link-${matchingproduct.id}" data-product-id="${matchingproduct.id}">
                     Delete
                     </span>
                 </div>
@@ -118,11 +121,13 @@ export function renderOrderSummary(){
                 const productId = link.dataset.productId;
                 removeFromCart(productId);
 
-                renderCheckoutHeader();
+                const container =document.querySelector(
+                    `.js-cart-item-container-${productId}`
+                );
+                container.remove();
+                
                 renderOrderSummary();
                 renderPaymentSummary();
-
-                updateCartQuantity ();
             });
         });
 
@@ -143,7 +148,7 @@ export function renderOrderSummary(){
         document.querySelector('.js-return-to-home-link')
             .innerHTML = `${cartQuantity} items`;
     }   
-
+    
     updateCartQuantity ();
 
     document.querySelectorAll('.js-update-link')
