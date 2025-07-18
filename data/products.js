@@ -25,6 +25,7 @@ export class Product {
     this.name = productDetails.name;
     this.rating = productDetails.rating;
     this.priceCents = productDetails.priceCents;
+    this.keywords = productDetails.keywords;
   }
 
   getStarsUrl() {
@@ -108,7 +109,7 @@ object3.method();
 
 export let products = [];
 
-export function loadProductsFetcnh() {
+export function loadProductsFetch() {
   const promise = fetch(
     'https://supersimplebackend.dev/products'
   ).then((response) => {
@@ -132,7 +133,7 @@ export function loadProductsFetcnh() {
   return promise;
 }
 /*
-loadProductsFetcnh().then(() => {
+loadProductsFetch().then(() => {
   console.log('next step');
 });
 */
